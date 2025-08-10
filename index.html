@@ -408,8 +408,12 @@
     function playHit(v=1){ setupMusic(); const o=audioCtx.createOscillator(); o.type='square'; const g=audioCtx.createGain(); g.gain.value=0.08*v; o.frequency.setValueAtTime(200,audioCtx.currentTime); o.frequency.exponentialRampToValueAtTime(90,audioCtx.currentTime+0.12); o.connect(g); g.connect(audioCtx.destination); o.start(); g.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+0.15); o.stop(audioCtx.currentTime+0.16); }
     function playStairs(){ setupMusic(); ping(520); setTimeout(()=>ping(780),120); setTimeout(()=>ping(1040),240); }
 
-    // Primo render
+        // Primo render
     reset(true); render();
+
+    // Fallback: avvia al primo input (iOS friendly)
+    window.addEventListener('keydown', () => { start(); }, { once: true });
+    canvas.addEventListener('pointerdown', () => { start(); }, { once: true });
   </script>
 </body>
 </html>
